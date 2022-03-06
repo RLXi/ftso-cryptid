@@ -1,7 +1,7 @@
 import { KonvaPointerEvent } from "konva/lib/PointerEvents";
 import { RegularPolygon } from "react-konva";
 
-interface IStructure {
+export interface IStructure {
   type: "shack" | "stone";
   color: "blue" | "green" | "white" | "black";
 }
@@ -20,7 +20,7 @@ export default function Structure({
   y,
 }: IStructure & IPosition) {
   function handleClick(e: KonvaPointerEvent) {
-    console.log(`structure ${type}`);
+    console.log(`structure ${type} ${color}`);
   }
   const numSides = type === "shack" ? 3 : 8;
   return (

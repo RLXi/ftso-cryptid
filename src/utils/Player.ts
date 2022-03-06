@@ -3,7 +3,7 @@ export interface IPlayer {
   color?: string;
 }
 
-export default function Player(
+export function Player(
   name: "alpha" | "beta" | "gamma" | "delta" | "epsilon"
 ): IPlayer {
   let color = "red";

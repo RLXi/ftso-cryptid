@@ -31,7 +31,7 @@ export default function PlayerMarker({
   height = type === "yes" ? STANDARD_SIZE_YES : STANDARD_SIZE_NO,
 }: IMarker & IPosition & ISize) {
   function handleClick(e: KonvaPointerEvent) {
-    console.log(`player marker ${type}`);
+    console.log(`player marker ${player.color} ${type}`);
   }
   if (type === "yes")
     return (

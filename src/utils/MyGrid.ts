@@ -1,6 +1,6 @@
 import { defineGrid, extendHex } from "honeycomb-grid";
 
-export default function MyGrid(
+export function MyGrid(
   size: number,
   width: number = 12,
   height: number = 9,

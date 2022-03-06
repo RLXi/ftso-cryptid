@@ -1,17 +1,52 @@
+type ITerrainColor = "green" | "blue" | "yellow" | "purple" | "gray";
+type ITerrainType = "forest" | "water" | "desert" | "swamp" | "mountain";
+type ITerrainAnimal = "bear" | "cougar" | null;
+
 export interface ITerrain {
-  name: "forest" | "water" | "desert" | "swamp" | "mountain";
-  color: "yellow" | "green" | "gray" | "blue" | "purple";
-  animal: "bear" | "cougar" | null;
+  type: ITerrainType;
+  color: ITerrainColor;
 }
 
-const terrainColorList = ["yellow", "green", "gray", "blue", "purple"];
+export interface IAnimalTerrain extends ITerrain {
+  animal: ITerrainAnimal;
+}
 
-export default function Terrain(
-  name: "forest" | "water" | "desert" | "swamp" | "mountain"
-): ITerrain {
+export function Terrain(type: ITerrainType): ITerrain {
+  let color: ITerrainColor;
+  switch (type) {
+    case "forest":
+      color = "green";
+      break;
+    case "water":
+      color = "blue";
+      break;
+    case "desert":
+      color = "yellow";
+      break;
+    case "swamp":
+      color = "purple";
+      break;
+    case "mountain":
+      color = "gray";
+      break;
+    default:
+      throw new Error("Invalid terrain");
+  }
+
   return {
-    name: "forest",
-    color: "green",
-    animal: null,
+    type,
+    color,
+  };
+}
+
+export function AnimalTerrain(
+  type: ITerrainType,
+  color: ITerrainColor,
+  animal: ITerrainAnimal
+): IAnimalTerrain {
+  return {
+    type,
+    color,
+    animal,
   };
 }
