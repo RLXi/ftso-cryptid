@@ -1,9 +1,12 @@
 import { KonvaPointerEvent } from "konva/lib/PointerEvents";
 import { RegularPolygon } from "react-konva";
 
+type IStructureType = "shack" | "stone";
+type IStructureColor = "blue" | "green" | "white" | "black";
+
 export interface IStructure {
-  type: "shack" | "stone";
-  color: "blue" | "green" | "white" | "black";
+  type: IStructureType;
+  color: IStructureColor;
 }
 
 interface IPosition {

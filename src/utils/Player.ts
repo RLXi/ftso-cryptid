@@ -1,12 +1,13 @@
+type PlayerName = "alpha" | "beta" | "gamma" | "delta" | "epsilon";
+type PlayerColor = "red" | "green" | "brown" | "blue" | "purple";
+
 export interface IPlayer {
-  name: "alpha" | "beta" | "gamma" | "delta" | "epsilon";
-  color?: string;
+  name: PlayerName;
+  color?: PlayerColor;
 }
 
-export function Player(
-  name: "alpha" | "beta" | "gamma" | "delta" | "epsilon"
-): IPlayer {
-  let color = "red";
+export function Player(name: PlayerName): IPlayer {
+  let color: PlayerColor = "red";
   switch (name) {
     case "alpha":
       color = "red";
@@ -23,6 +24,8 @@ export function Player(
     case "epsilon":
       color = "purple";
       break;
+    default:
+      throw new Error("Invalid player");
   }
   return {
     name,
