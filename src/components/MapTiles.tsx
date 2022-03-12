@@ -6,20 +6,24 @@ import { GRID_HEX_SIZE, MyGrid } from "../utils";
 
 import { AnimalHexagon, MyHexagon } from "./Hexagon";
 
-export function MapTiles({
-  tileset,
-  offsetX = 0,
-  offsetY = 0,
-}: {
-  tileset: any[];
+interface ITerrain {
+  type: string;
+  color: string;
+  animal?: string;
+}
+
+interface IMapTiles {
+  tileset: ITerrain[][];
   offsetX?: number;
   offsetY?: number;
-}) {
+}
+
+export function MapTiles({ tileset, offsetX = 0, offsetY = 0 }: IMapTiles) {
   const miniGrid = MyGrid(GRID_HEX_SIZE, 6, 3);
   const memoHexes = useMemo(() => {
     let inc = 0;
     return miniGrid.map((hex, idx) => {
-      const { animal, color } = tileset[idx % 3][inc];
+      const { animal, color, type } = tileset[idx % 3][inc];
       if (idx % 3 === 2) inc++;
 
       const point = hex.toPoint();
@@ -34,6 +38,7 @@ export function MapTiles({
             coordx={hex.x}
             coordy={hex.y}
             color={color}
+            type={type}
           />
         );
       return (
@@ -45,6 +50,7 @@ export function MapTiles({
           coordy={hex.y}
           key={`${point.x}-${point.y}`}
           color={color}
+          type={type}
         />
       );
     });
@@ -53,7 +59,7 @@ export function MapTiles({
     // <Layer offsetX={offsetX} offsetY={offsetY} draggable>
     //   {memoHexes.map((hex) => hex)}
     // </Layer>
-    <Group offsetX={offsetX} offsetY={offsetY} draggable>
+    <Group offsetX={offsetX} offsetY={offsetY}>
       {memoHexes.map((hex) => hex)}
     </Group>
   );

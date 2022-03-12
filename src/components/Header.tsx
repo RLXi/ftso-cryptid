@@ -3,6 +3,9 @@ import { Step1 } from "./Step1";
 import { Step2 } from "./Step2";
 import { Step3 } from "./Step3";
 import { Step4 } from "./Step4";
+import { Error } from "./ErrorBoundary";
+import { useContext } from "react";
+import SetupContext, { NumPlayersType } from "../SetupContext";
 
 export function Header({
   prevSetupStep,
@@ -32,6 +35,12 @@ export function Header({
   playerNum: number;
 }) {
   const iconSize = 32;
+  const setup = useContext(SetupContext);
+
+  function handleChangePlayerNum(e: string) {
+    setPlayerNum(parseInt(e));
+    setup.setNumPlayers(parseInt(e) as NumPlayersType);
+  }
   return (
     <>
       <Button variant="default" onClick={prevSetupStep}>
@@ -45,27 +54,35 @@ export function Header({
         onStepClick={setSetupStep}
       >
         <Stepper.Step label="Game mode">
-          <Step1
-            playerNum={playerNum}
-            setPlayerNum={setPlayerNum}
-            advanced={advanced}
-            setAdvanced={setAdvanced}
-          />
+          <Error>
+            <Step1
+              playerNum={setup.numPlayers}
+              advanced={advanced}
+              setAdvanced={setAdvanced}
+              handleChange={handleChangePlayerNum}
+            />
+          </Error>
         </Stepper.Step>
         <Stepper.Step label="Construct map">
-          <Step2 />
+          <Error>
+            <Step2 />
+          </Error>
         </Stepper.Step>
         <Stepper.Step label="Place buildings">
-          <Step3
-            iconSize={iconSize}
-            active={active}
-            setActive={setActive}
-            prevStep={prevStep}
-            nextStep={nextStep}
-          />
+          <Error>
+            <Step3
+              iconSize={iconSize}
+              active={active}
+              setActive={setActive}
+              prevStep={prevStep}
+              nextStep={nextStep}
+            />
+          </Error>
         </Stepper.Step>
         <Stepper.Step label="Select initial clues">
-          <Step4 />
+          <Error>
+            <Step4 />
+          </Error>
         </Stepper.Step>
       </Stepper>
     </>

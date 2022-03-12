@@ -1,6 +1,6 @@
 import { KonvaPointerEvent } from "konva/lib/PointerEvents";
 import { useEffect, useState } from "react";
-import { RegularPolygon, Image } from "react-konva";
+import { RegularPolygon, Image, Text } from "react-konva";
 
 import { GRID_HEX_SIZE } from "../utils";
 
@@ -11,6 +11,7 @@ export function MyHexagon({
   coordx,
   coordy,
   color,
+  type,
   radius = GRID_HEX_SIZE - 1,
 }: {
   id: number;
@@ -19,23 +20,36 @@ export function MyHexagon({
   coordx: number;
   coordy: number;
   color: string;
+  type: string;
   radius?: number;
 }) {
   function handleClick(e: KonvaPointerEvent) {
     console.log(`${id} [${coordx},${coordy}] terrain ${color}`);
   }
+  const txt = type ? type.slice(0)[0].toUpperCase() : "T";
+
   return (
-    <RegularPolygon
-      x={x}
-      y={y}
-      sides={6}
-      stroke={"brown"}
-      strokeWidth={3}
-      radius={radius}
-      rotation={90}
-      fill={color}
-      onClick={handleClick}
-    />
+    <>
+      <RegularPolygon
+        x={x}
+        y={y}
+        sides={6}
+        stroke={"brown"}
+        strokeWidth={3}
+        radius={radius}
+        rotation={90}
+        fill={color}
+        onClick={handleClick}
+      />
+      <Text
+        text={txt}
+        x={x - 5}
+        y={y - 30}
+        fontSize={16}
+        strokeWidth={1}
+        stroke={"black"}
+      />
+    </>
   );
 }
 
@@ -46,6 +60,7 @@ export function AnimalHexagon({
   coordx,
   coordy,
   color,
+  type,
   animal,
   radius = GRID_HEX_SIZE - 1,
 }: {
@@ -55,6 +70,7 @@ export function AnimalHexagon({
   coordx: number;
   coordy: number;
   color: string;
+  type: string;
   animal: string;
   radius?: number;
 }) {
@@ -63,7 +79,7 @@ export function AnimalHexagon({
   }
 
   const [image, setImage] = useState<any>(null);
-
+  const txt = type ? type.slice(0)[0].toUpperCase() : "T";
   useEffect(() => {
     const winimg = new window.Image(20, 20);
     winimg.src = animal === "bear" ? "print-bear.svg" : "print-cougar.svg";
@@ -82,7 +98,6 @@ export function AnimalHexagon({
         radius={radius}
         rotation={90}
         fill={color}
-        onClick={handleClick}
       />
       <RegularPolygon
         x={x}
@@ -96,6 +111,14 @@ export function AnimalHexagon({
         onClick={handleClick}
       />
       <Image image={image} x={x - 10} y={y + 10} />
+      <Text
+        text={txt}
+        x={x - 5}
+        y={y - 30}
+        fontSize={16}
+        strokeWidth={1}
+        stroke={"black"}
+      />
     </>
   );
 }

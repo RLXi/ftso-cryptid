@@ -17,7 +17,7 @@ import {
   tile6f,
 } from "../utils";
 import { useState, useContext, useEffect } from "react";
-import { Checkbox, Group, Radio, RadioGroup, Stepper } from "@mantine/core";
+import { Group, Radio, RadioGroup, Stepper, Switch } from "@mantine/core";
 import SetupContext, { ISetup } from "../SetupContext";
 
 export function Step2() {
@@ -40,23 +40,35 @@ export function Step2() {
   const a = useViewportSize();
   const offsetX = -450;
   const offsetY = -260;
-  const [pos1, setPos1] = useState("tile1");
-  const [pos2, setPos2] = useState("tile2");
-  const [pos3, setPos3] = useState("tile3");
-  const [pos4, setPos4] = useState("tile4");
-  const [pos5, setPos5] = useState("tile5");
-  const [pos6, setPos6] = useState("tile6");
+  const setupTiles = setup.mapLayout.split(",");
 
-  const [flip1, setFlip1] = useState(false);
-  const [flip2, setFlip2] = useState(false);
-  const [flip3, setFlip3] = useState(false);
-  const [flip4, setFlip4] = useState(false);
-  const [flip5, setFlip5] = useState(false);
-  const [flip6, setFlip6] = useState(false);
-
-  const [finalPosString, setFinalPosString] = useState(
-    "tile1,tile2,tile3,tile4,tile5,tile6"
+  const [pos1, setPos1] = useState(
+    setupTiles[0].length > 5 ? setupTiles[0].slice(0, 5) : setupTiles[0]
   );
+  const [pos2, setPos2] = useState(
+    setupTiles[1].length > 5 ? setupTiles[1].slice(0, 5) : setupTiles[1]
+  );
+  const [pos3, setPos3] = useState(
+    setupTiles[2].length > 5 ? setupTiles[2].slice(0, 5) : setupTiles[2]
+  );
+  const [pos4, setPos4] = useState(
+    setupTiles[3].length > 5 ? setupTiles[3].slice(0, 5) : setupTiles[3]
+  );
+  const [pos5, setPos5] = useState(
+    setupTiles[4].length > 5 ? setupTiles[4].slice(0, 5) : setupTiles[4]
+  );
+  const [pos6, setPos6] = useState(
+    setupTiles[5].length > 5 ? setupTiles[5].slice(0, 5) : setupTiles[5]
+  );
+
+  const [flip1, setFlip1] = useState(setupTiles[0].length > 5);
+  const [flip2, setFlip2] = useState(setupTiles[1].length > 5);
+  const [flip3, setFlip3] = useState(setupTiles[2].length > 5);
+  const [flip4, setFlip4] = useState(setupTiles[3].length > 5);
+  const [flip5, setFlip5] = useState(setupTiles[4].length > 5);
+  const [flip6, setFlip6] = useState(setupTiles[5].length > 5);
+
+  const [finalPosString, setFinalPosString] = useState(setup.mapLayout);
   const finalPos1 = `${pos1 + (flip1 ? "f" : "")}`;
   const finalPos2 = `${pos2 + (flip2 ? "f" : "")}`;
   const finalPos3 = `${pos3 + (flip3 ? "f" : "")}`;
@@ -65,6 +77,8 @@ export function Step2() {
   const finalPos6 = `${pos6 + (flip6 ? "f" : "")}`;
 
   useEffect(() => {
+    console.log(setup.mapLayout);
+
     setFinalPosString(
       [finalPos1, finalPos2, finalPos3, finalPos4, finalPos5, finalPos6].join(
         ","
@@ -85,8 +99,7 @@ export function Step2() {
     flip6,
   ]);
   useEffect(() => {
-    setup?.setMapLayout(finalPosString);
-    console.log(setup?.mapLayout);
+    setup.setMapLayout(finalPosString!);
   }, [finalPosString]);
 
   return (
@@ -99,132 +112,60 @@ export function Step2() {
         <Stepper.Step label="Fifth tile"></Stepper.Step>
         <Stepper.Step label="Sixth tile"></Stepper.Step>
       </Stepper> */}
-      <Group>
-        <RadioGroup
-          label="First"
-          required
-          name="First"
-          value={pos1}
-          onChange={(e) => setPos1(e)}
-        >
-          <Radio value="tile1" label="Tile 1" checked />
-          <Radio value="tile2" label="Tile 2" />
-          <Radio value="tile3" label="Tile 3" />
-          <Radio value="tile4" label="Tile 4" />
-          <Radio value="tile5" label="Tile 5" />
-          <Radio value="tile6" label="Tile 6" />
-        </RadioGroup>
-        <Checkbox
-          label="Flipped"
-          name="firstflipped"
-          onChange={(e) => setFlip1(e.currentTarget.checked)}
-        />
-      </Group>
-      <Group>
-        <RadioGroup
-          label="Second"
-          required
-          name="Second"
-          value={pos2}
-          onChange={(e) => setPos2(e)}
-        >
-          <Radio value="tile1" label="Tile 1" />
-          <Radio value="tile2" label="Tile 2" checked />
-          <Radio value="tile3" label="Tile 3" />
-          <Radio value="tile4" label="Tile 4" />
-          <Radio value="tile5" label="Tile 5" />
-          <Radio value="tile6" label="Tile 6" />
-        </RadioGroup>
-        <Checkbox
-          label="Flipped"
-          name="secondflipped"
-          onChange={(e) => setFlip2(e.currentTarget.checked)}
-        />
-      </Group>
-      <Group>
-        <RadioGroup
-          label="Third"
-          required
-          name="Third"
-          value={pos3}
-          onChange={(e) => setPos3(e)}
-        >
-          <Radio value="tile1" label="Tile 1" />
-          <Radio value="tile2" label="Tile 2" />
-          <Radio value="tile3" label="Tile 3" checked />
-          <Radio value="tile4" label="Tile 4" />
-          <Radio value="tile5" label="Tile 5" />
-          <Radio value="tile6" label="Tile 6" />
-        </RadioGroup>
-        <Checkbox
-          label="Flipped"
-          name="thirdflipped"
-          onChange={(e) => setFlip3(e.currentTarget.checked)}
-        />
-      </Group>
-      <Group>
-        <RadioGroup
-          label="Fourth"
-          required
-          name="Fourth"
-          value={pos4}
-          onChange={(e) => setPos4(e)}
-        >
-          <Radio value="tile1" label="Tile 1" />
-          <Radio value="tile2" label="Tile 2" />
-          <Radio value="tile3" label="Tile 3" />
-          <Radio value="tile4" label="Tile 4" checked />
-          <Radio value="tile5" label="Tile 5" />
-          <Radio value="tile6" label="Tile 6" />
-        </RadioGroup>
-        <Checkbox
-          label="Flipped"
-          name="fourthflipped"
-          onChange={(e) => setFlip4(e.currentTarget.checked)}
-        />
-      </Group>
-      <Group>
-        <RadioGroup
-          label="Fifth"
-          required
-          name="Fifth"
-          value={pos5}
-          onChange={(e) => setPos5(e)}
-        >
-          <Radio value="tile1" label="Tile 1" />
-          <Radio value="tile2" label="Tile 2" />
-          <Radio value="tile3" label="Tile 3" />
-          <Radio value="tile4" label="Tile 4" />
-          <Radio value="tile5" label="Tile 5" checked />
-          <Radio value="tile6" label="Tile 6" />
-        </RadioGroup>
-        <Checkbox
-          label="Flipped"
-          name="fifthflipped"
-          onChange={(e) => setFlip5(e.currentTarget.checked)}
-        />
-      </Group>
-      <Group>
-        <RadioGroup
-          label="Sixth"
-          required
-          name="Sixth"
-          value={pos6}
-          onChange={(e) => setPos6(e)}
-        >
-          <Radio value="tile1" label="Tile 1" />
-          <Radio value="tile2" label="Tile 2" />
-          <Radio value="tile3" label="Tile 3" />
-          <Radio value="tile4" label="Tile 4" />
-          <Radio value="tile5" label="Tile 5" />
-          <Radio value="tile6" label="Tile 6" checked />
-        </RadioGroup>
-        <Checkbox
-          label="Flipped"
-          name="sixthflipped"
-          onChange={(e) => setFlip6(e.currentTarget.checked)}
-        />
-      </Group>
+      <MapTileChoice
+        radioLabel="First"
+        radioName="first"
+        switchName="first"
+        pos={pos1}
+        setPos={setPos1}
+        flip={flip1}
+        setFlip={setFlip1}
+      />
+      <MapTileChoice
+        radioLabel="Second"
+        radioName="second"
+        switchName="second"
+        pos={pos2}
+        setPos={setPos2}
+        flip={flip2}
+        setFlip={setFlip2}
+      />
+      <MapTileChoice
+        radioLabel="Third"
+        radioName="third"
+        switchName="third"
+        pos={pos3}
+        setPos={setPos3}
+        flip={flip3}
+        setFlip={setFlip3}
+      />
+      <MapTileChoice
+        radioLabel="Fourth"
+        radioName="fourth"
+        switchName="fourth"
+        pos={pos4}
+        setPos={setPos4}
+        flip={flip4}
+        setFlip={setFlip4}
+      />
+      <MapTileChoice
+        radioLabel="Fifth"
+        radioName="fifth"
+        switchName="fifth"
+        pos={pos5}
+        setPos={setPos5}
+        flip={flip5}
+        setFlip={setFlip5}
+      />
+      <MapTileChoice
+        radioLabel="Sixth"
+        radioName="sixth"
+        switchName="sixth"
+        pos={pos6}
+        setPos={setPos6}
+        flip={flip6}
+        setFlip={setFlip6}
+      />
       <Stage
         width={a.width - a.width * 0.1}
         height={a.height}
@@ -261,5 +202,50 @@ export function Step2() {
         </Layer>
       </Stage>
     </>
+  );
+}
+
+interface IMapTileChoice {
+  radioName: string;
+  radioLabel: string;
+  switchName: string;
+  pos: string;
+  flip: boolean;
+  setPos: (s: string) => void;
+  setFlip: (b: boolean) => void;
+}
+
+function MapTileChoice({
+  radioName: name,
+  radioLabel: label,
+  switchName,
+  pos,
+  setPos,
+  flip,
+  setFlip,
+}: IMapTileChoice) {
+  return (
+    <Group>
+      <RadioGroup
+        label={label}
+        required
+        name={name}
+        value={pos}
+        onChange={(e) => setPos(e)}
+      >
+        <Radio value="tile1" label="Tile 1" />
+        <Radio value="tile2" label="Tile 2" />
+        <Radio value="tile3" label="Tile 3" />
+        <Radio value="tile4" label="Tile 4" />
+        <Radio value="tile5" label="Tile 5" />
+        <Radio value="tile6" label="Tile 6" />
+      </RadioGroup>
+      <Switch
+        label="Flipped"
+        name={`${switchName}flipped`}
+        checked={flip}
+        onChange={(e) => setFlip(e.currentTarget.checked)}
+      />
+    </Group>
   );
 }
