@@ -137,7 +137,7 @@ export function useMap() {
     return map.map((hex, idx) => {
       const point = hex.toPoint();
 
-      const { animal, color } = hexesInRow[idx];
+      const { animal, color, type } = hexesInRow[idx];
       return animal ? (
         <AnimalHexagon
           id={idx}
@@ -148,6 +148,7 @@ export function useMap() {
           coordx={hex.x}
           coordy={hex.y}
           color={color}
+          type={type}
         />
       ) : (
         <MyHexagon
@@ -158,6 +159,7 @@ export function useMap() {
           coordx={hex.x}
           coordy={hex.y}
           color={color}
+          type={type}
         />
       );
     });
