@@ -52,7 +52,7 @@ function App() {
         />
       }
     >
-      <Canvas structures={structures} hexes={hexes} />
+      {/* <Canvas structures={structures} hexes={hexes} /> */}
       {/* <Button onClick={() => setIsOpen(true)}>Open map</Button> */}
       {/* <Drawer
         opened={isOpen}
