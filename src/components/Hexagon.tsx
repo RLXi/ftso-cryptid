@@ -4,6 +4,9 @@ import { RegularPolygon, Image, Text } from "react-konva";
 
 import { GRID_HEX_SIZE } from "../utils";
 
+import printBear from "../print-bear.svg";
+import printCougar from "../print-cougar.svg";
+
 export function MyHexagon({
   id,
   x,
@@ -82,7 +85,7 @@ export function AnimalHexagon({
   const txt = type ? type.slice(0)[0].toUpperCase() : "T";
   useEffect(() => {
     const winimg = new window.Image(20, 20);
-    winimg.src = animal === "bear" ? "print-bear.svg" : "print-cougar.svg";
+    winimg.src = animal === "bear" ? printBear : printCougar;
 
     setImage(winimg);
   }, []);
