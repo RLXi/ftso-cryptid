@@ -6,6 +6,7 @@ export interface IStructurePosition {
   x: number;
   y: number;
   type: "shack" | "stone";
+  color: "black" | "blue" | "green" | "white";
 }
 export interface ISetup {
   mapLayout: string;
@@ -22,7 +23,9 @@ const SetupContext = React.createContext<ISetup>({} as ISetup);
 
 export function SetupProvider({ children }: { children: React.ReactNode }) {
   const [gameMode, setGameMode] = React.useState<GameModeType>("normal");
-  const [structurePositions, setStructurePositions] = React.useState<any[]>([]);
+  const [structurePositions, setStructurePositions] = React.useState<
+    IStructurePosition[]
+  >([]);
   const [numPlayers, setNumPlayers] = React.useState<NumPlayersType>(4);
   const [mapLayout, setMapLayout] = React.useState(
     "tile1,tile2,tile3,tile4,tile5,tile6"

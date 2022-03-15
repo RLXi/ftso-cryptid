@@ -1,8 +1,8 @@
 import { RadioGroup, Radio, Checkbox } from "@mantine/core";
 
 export function Step1({
-  playerNum,
-  advanced,
+  playerNum = 4,
+  advanced = false,
   setAdvanced,
   handleChange,
 }: {

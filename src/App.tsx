@@ -14,7 +14,7 @@ function App() {
   const [active, setActive] = useState(0);
   const [advanced, setAdvanced] = useState(false);
   const [playerNum, setPlayerNum] = useState(3);
-  const { ref, x: mx, y: my } = useMouse();
+  // const { ref, x: mx, y: my } = useMouse();
   const structures: ReactNode[] = [];
   const nextSetupStep = () =>
     setSetupStep((current: number) => (current < 4 ? current + 1 : current));
@@ -27,11 +27,11 @@ function App() {
     setActive((current: number) => (current > 0 ? current - 1 : current));
   const hexes = useMap();
 
-  function addStructure({ color, type }: IStructure) {
-    return structures.push(
-      <Structure color={color} type={type} x={mx} y={my} />
-    );
-  }
+  // function addStructure({ color, type }: IStructure) {
+  //   return structures.push(
+  //     <Structure color={color} type={type} x={mx} y={my} />
+  //   );
+  // }
 
   return (
     <AppShell

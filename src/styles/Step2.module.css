@@ -1,0 +1,21 @@
+.visual_helper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 8em;
+  text-align: center;
+  margin: 0.5em;
+}
+
+.helper_item {
+  width: 4em;
+  height: 2em;
+  background-color: var(--gray-5);
+  padding-block: 0.25em;
+  padding-inline: 0.5em;
+  font-weight: var(--font-weight-6);
+}
+
+.helper_item.black {
+  background-color: var(--gray-8);
+  color: var(--gray-2);
+}
