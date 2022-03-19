@@ -4,7 +4,7 @@ export * from "./PlayerMarker";
 export * from "./Structure";
 export * from "./AnimalHex";
 export * from "./ErrorBoundary";
-export * from "./Header";
+export * from "./Body";
 export * from "./Canvas";
 export * from "./Step1";
 export * from "./Step2";
