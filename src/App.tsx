@@ -1,4 +1,4 @@
-import { Header, Canvas } from "./components";
+import { Body, Canvas } from "./components";
 import { useMouse } from "@mantine/hooks";
 import { Drawer, Button, AppShell } from "@mantine/core";
 import Structure, { IStructure } from "./components/Structure";
@@ -34,24 +34,21 @@ function App() {
   // }
 
   return (
-    <AppShell
-      header={
-        <Header
-          prevSetupStep={prevSetupStep}
-          nextSetupStep={nextSetupStep}
-          setupStep={setupStep}
-          setSetupStep={setSetupStep}
-          advanced={advanced}
-          setAdvanced={setAdvanced}
-          active={active}
-          setActive={setActive}
-          prevStep={prevStep}
-          nextStep={nextStep}
-          setPlayerNum={setPlayerNum}
-          playerNum={playerNum}
-        />
-      }
-    >
+    <AppShell padding={"md"}>
+      <Body
+        prevSetupStep={prevSetupStep}
+        nextSetupStep={nextSetupStep}
+        setupStep={setupStep}
+        setSetupStep={setSetupStep}
+        advanced={advanced}
+        setAdvanced={setAdvanced}
+        active={active}
+        setActive={setActive}
+        prevStep={prevStep}
+        nextStep={nextStep}
+        setPlayerNum={setPlayerNum}
+        playerNum={playerNum}
+      />
       {/* <Canvas structures={structures} hexes={hexes} /> */}
       {/* <Button onClick={() => setIsOpen(true)}>Open map</Button> */}
       {/* <Drawer
