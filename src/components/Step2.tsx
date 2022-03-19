@@ -17,7 +17,14 @@ import {
   tile6f,
 } from "../utils";
 import { useState, useContext, useEffect } from "react";
-import { Center, Group, Radio, RadioGroup, Switch } from "@mantine/core";
+import {
+  Center,
+  Group,
+  Radio,
+  RadioGroup,
+  SimpleGrid,
+  Switch,
+} from "@mantine/core";
 import SetupContext from "../SetupContext";
 
 import styles from "../styles/Step2.module.css";
@@ -136,60 +143,69 @@ export function Step2() {
   return (
     <>
       <Center style={{ padding: "1em" }}>
-        <MapTileChoice
-          radioLabel="First"
-          radioName="first"
-          switchName="first"
-          pos={pos1}
-          setPos={setPos1}
-          flip={flip1}
-          setFlip={setFlip1}
-        />
-        <MapTileChoice
-          radioLabel="Second"
-          radioName="second"
-          switchName="second"
-          pos={pos2}
-          setPos={setPos2}
-          flip={flip2}
-          setFlip={setFlip2}
-        />
-        <MapTileChoice
-          radioLabel="Third"
-          radioName="third"
-          switchName="third"
-          pos={pos3}
-          setPos={setPos3}
-          flip={flip3}
-          setFlip={setFlip3}
-        />
-        <MapTileChoice
-          radioLabel="Fourth"
-          radioName="fourth"
-          switchName="fourth"
-          pos={pos4}
-          setPos={setPos4}
-          flip={flip4}
-          setFlip={setFlip4}
-        />
-        <MapTileChoice
-          radioLabel="Fifth"
-          radioName="fifth"
-          switchName="fifth"
-          pos={pos5}
-          setPos={setPos5}
-          flip={flip5}
-          setFlip={setFlip5}
-        />
-        <MapTileChoice
-          radioLabel="Sixth"
-          radioName="sixth"
-          switchName="sixth"
-          pos={pos6}
-          setPos={setPos6}
-          flip={flip6}
-          setFlip={setFlip6}
-        />
+        <SimpleGrid
+          cols={6}
+          breakpoints={[
+            { cols: 1, maxWidth: 450 },
+            { cols: 2, maxWidth: 650 },
+            { cols: 3, maxWidth: 1200 },
+          ]}
+        >
+          <MapTileChoice
+            radioLabel="First"
+            radioName="first"
+            switchName="first"
+            pos={pos1}
+            setPos={setPos1}
+            flip={flip1}
+            setFlip={setFlip1}
+          />
+          <MapTileChoice
+            radioLabel="Second"
+            radioName="second"
+            switchName="second"
+            pos={pos2}
+            setPos={setPos2}
+            flip={flip2}
+            setFlip={setFlip2}
+          />
+          <MapTileChoice
+            radioLabel="Third"
+            radioName="third"
+            switchName="third"
+            pos={pos3}
+            setPos={setPos3}
+            flip={flip3}
+            setFlip={setFlip3}
+          />
+          <MapTileChoice
+            radioLabel="Fourth"
+            radioName="fourth"
+            switchName="fourth"
+            pos={pos4}
+            setPos={setPos4}
+            flip={flip4}
+            setFlip={setFlip4}
+          />
+          <MapTileChoice
+            radioLabel="Fifth"
+            radioName="fifth"
+            switchName="fifth"
+            pos={pos5}
+            setPos={setPos5}
+            flip={flip5}
+            setFlip={setFlip5}
+          />
+          <MapTileChoice
+            radioLabel="Sixth"
+            radioName="sixth"
+            switchName="sixth"
+            pos={pos6}
+            setPos={setPos6}
+            flip={flip6}
+            setFlip={setFlip6}
+          />
+        </SimpleGrid>
       </Center>
       <Center>
         <VisualHelper tiles={tilesVisual} />
