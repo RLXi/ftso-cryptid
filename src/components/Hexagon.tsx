@@ -4,10 +4,10 @@ import { RegularPolygon, Image, Text } from "react-konva";
 
 import { GRID_HEX_SIZE } from "../utils";
 
-import printBear from "../print-bear.svg";
-import printCougar from "../print-cougar.svg";
+import printBear from "../assets/print-bear.svg";
+import printCougar from "../assets/print-cougar.svg";
 
-export function MyHexagon({
+export function BasicHexagon({
   id,
   x,
   y,

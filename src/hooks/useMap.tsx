@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { useMemo } from "react";
-import { MyHexagon, AnimalHexagon } from "../components";
+import { BasicHexagon, AnimalHexagon } from "../components";
 import {
   MyGrid,
   tile1,
@@ -151,7 +151,7 @@ export function useMap() {
           type={type}
         />
       ) : (
-        <MyHexagon
+        <BasicHexagon
           id={idx}
           key={point.x + "-" + point.y}
           x={point.x}

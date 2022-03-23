@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { Group } from "react-konva";
 import { GRID_HEX_SIZE, MyGrid } from "../utils";
 
-import { AnimalHexagon, MyHexagon } from "./Hexagon";
+import { AnimalHexagon, BasicHexagon } from "./Hexagon";
 
 interface ITerrain {
   type: string;
@@ -42,7 +42,7 @@ export function MapTiles({ tileset, offsetX = 0, offsetY = 0 }: IMapTiles) {
           />
         );
       return (
-        <MyHexagon
+        <BasicHexagon
           id={idx}
           x={point.x}
           y={point.y}
