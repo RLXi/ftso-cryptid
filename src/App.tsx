@@ -36,7 +36,7 @@ function App() {
   return (
     <AppShell padding={"md"}>
       <Center>
-        <h1>We much WIP</h1>
+        <h1>WIP</h1>
       </Center>
       <Body
         prevSetupStep={prevSetupStep}
