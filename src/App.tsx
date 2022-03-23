@@ -1,6 +1,6 @@
 import { Body, Canvas } from "./components";
 import { useMouse } from "@mantine/hooks";
-import { Drawer, Button, AppShell } from "@mantine/core";
+import { Drawer, Button, AppShell, Center } from "@mantine/core";
 import Structure, { IStructure } from "./components/Structure";
 
 import "./App.css";
@@ -35,6 +35,9 @@ function App() {
 
   return (
     <AppShell padding={"md"}>
+      <Center>
+        <h1>We much WIP</h1>
+      </Center>
       <Body
         prevSetupStep={prevSetupStep}
         nextSetupStep={nextSetupStep}
