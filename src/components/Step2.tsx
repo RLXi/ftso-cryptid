@@ -23,6 +23,7 @@ import {
   Radio,
   RadioGroup,
   SimpleGrid,
+  Slider,
   Switch,
 } from "@mantine/core";
 import SetupContext from "../SetupContext";
@@ -31,7 +32,7 @@ import styles from "../styles/Step2.module.css";
 
 function HelperItem({ tile, count }: { tile: string; count: number }) {
   return (
-    <div className={`${styles.helper_item} ${count == 0 ? styles.black : ""}`}>
+    <div className={`${styles.helper_item} ${count === 0 ? styles.black : ""}`}>
       <span>{tile}</span>
     </div>
   );
@@ -39,9 +40,11 @@ function HelperItem({ tile, count }: { tile: string; count: number }) {
 
 function VisualHelper({ tiles }: { tiles: string[] }) {
   const helperItems = [];
+  const len = tiles.length;
   let count = 0;
-  for (let y = 0; y < tiles.length / 2; y++) {
-    for (let x = 0; x < tiles.length / 3; x++) {
+
+  for (let y = 0; y < len / 2; y++) {
+    for (let x = 0; x < len / 3; x++) {
       helperItems.push(
         <HelperItem
           key={`${tiles[count]}-${count}`}
@@ -52,6 +55,7 @@ function VisualHelper({ tiles }: { tiles: string[] }) {
       count++;
     }
   }
+
   return (
     <div className={styles.visual_helper}>
       {helperItems.map((item) => item)}
@@ -82,6 +86,9 @@ export function Step2() {
   const setupTiles = setup.mapLayout.split(",");
 
   const checkLength = (st: string) => (st.length > 5 ? st.slice(0, 5) : st);
+
+  const [gridScale, setGridScale] = useState(1);
+  const [gridScaleEnd, setGridScaleEnd] = useState(1);
 
   const [pos1, setPos1] = useState(checkLength(setupTiles[0]));
   const [pos2, setPos2] = useState(checkLength(setupTiles[1]));
@@ -209,15 +216,29 @@ export function Step2() {
       </Center>
       <Center>
         <VisualHelper tiles={tilesVisual} />
+        <div>
+          Grid scale: {gridScale.toFixed(2)}
+          <br />
+          <Slider
+            value={gridScale}
+            onChange={setGridScale}
+            onChangeEnd={setGridScaleEnd}
+            min={0.1}
+            max={2}
+            step={0.01}
+          />
+        </div>
       </Center>
       <Stage
         width={a.width - a.width * 0.1}
         height={a.height}
-        offsetX={-200}
-        offsetY={-200}
+        offsetX={-50}
+        offsetY={-50}
         style={{
           backgroundColor: "var(--gray-9)",
         }}
+        scale={{ x: gridScaleEnd, y: gridScaleEnd }}
+        draggable
       >
         <Layer>
           <MapTiles tileset={tiles[`${pos1 + (flip1 ? "f" : "")}`]} />
