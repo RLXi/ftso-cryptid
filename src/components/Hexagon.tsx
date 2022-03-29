@@ -30,7 +30,7 @@ export function BasicHexagon({
     console.log(`${id} [${coordx},${coordy}] terrain ${color}`);
   }
   const txt = type ? type.slice(0)[0].toUpperCase() : "T";
-
+  const coordinatesText = `{${coordx},${coordy}}`;
   return (
     <>
       <RegularPolygon
@@ -47,9 +47,17 @@ export function BasicHexagon({
       <Text
         text={txt}
         x={x - 5}
-        y={y - 30}
+        y={y - 35}
         fontSize={16}
         strokeWidth={1}
+        stroke={"black"}
+      />
+      <Text
+        text={coordinatesText}
+        x={x - 15}
+        y={y + 18}
+        fontSize={14}
+        strokeWidth={0.5}
         stroke={"black"}
       />
     </>
@@ -83,6 +91,7 @@ export function AnimalHexagon({
 
   const [image, setImage] = useState<any>(null);
   const txt = type ? type.slice(0)[0].toUpperCase() : "T";
+  const coordinatesText = `{${coordx},${coordy}}`;
   useEffect(() => {
     const winimg = new window.Image(20, 20);
     winimg.src = animal === "bear" ? printBear : printCougar;
@@ -113,13 +122,21 @@ export function AnimalHexagon({
         fill={color}
         onClick={handleClick}
       />
-      <Image image={image} x={x - 10} y={y + 10} />
+      {/* <Image image={image} x={x - 10} y={y + 10} /> */}
       <Text
         text={txt}
         x={x - 5}
-        y={y - 30}
+        y={y - 35}
         fontSize={16}
         strokeWidth={1}
+        stroke={"black"}
+      />
+      <Text
+        text={coordinatesText}
+        x={x - 15}
+        y={y + 18}
+        fontSize={14}
+        strokeWidth={0.5}
         stroke={"black"}
       />
     </>
