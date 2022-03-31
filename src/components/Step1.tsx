@@ -1,4 +1,4 @@
-import { RadioGroup, Radio, Checkbox } from "@mantine/core";
+import { RadioGroup, Radio, Switch } from "@mantine/core";
 
 export function Step1({
   playerNum = 4,
@@ -30,7 +30,7 @@ export function Step1({
         <Radio value="5" label="5 players" />
       </RadioGroup>
       <br />
-      <Checkbox
+      <Switch
         label="Advanced game"
         name="advanced"
         size="lg"
