@@ -26,7 +26,7 @@ import {
   Slider,
   Switch,
 } from "@mantine/core";
-import SetupContext from "../SetupContext";
+import SetupContext, { TileNumber } from "../SetupContext";
 
 import styles from "../styles/Step2.module.css";
 
@@ -83,43 +83,52 @@ export function Step2() {
   const a = useViewportSize();
   const offsetX = -450;
   const offsetY = -260;
-  const setupTiles = setup.mapLayout.split(",");
-
-  const checkLength = (st: string) => (st.length > 5 ? st.slice(0, 5) : st);
+  const setupTiles = setup.mapLayout;
 
   const [gridScale, setGridScale] = useState(1);
   const [gridScaleEnd, setGridScaleEnd] = useState(1);
 
-  const [pos1, setPos1] = useState(checkLength(setupTiles[0]));
-  const [pos2, setPos2] = useState(checkLength(setupTiles[1]));
-  const [pos3, setPos3] = useState(checkLength(setupTiles[2]));
-  const [pos4, setPos4] = useState(checkLength(setupTiles[3]));
-  const [pos5, setPos5] = useState(checkLength(setupTiles[4]));
-  const [pos6, setPos6] = useState(checkLength(setupTiles[5]));
+  const [pos1, setPos1] = useState(setupTiles.position1.tile);
+  const [pos2, setPos2] = useState(setupTiles.position2.tile);
+  const [pos3, setPos3] = useState(setupTiles.position3.tile);
+  const [pos4, setPos4] = useState(setupTiles.position4.tile);
+  const [pos5, setPos5] = useState(setupTiles.position5.tile);
+  const [pos6, setPos6] = useState(setupTiles.position6.tile);
 
-  const [flip1, setFlip1] = useState(setupTiles[0].length > 5);
-  const [flip2, setFlip2] = useState(setupTiles[1].length > 5);
-  const [flip3, setFlip3] = useState(setupTiles[2].length > 5);
-  const [flip4, setFlip4] = useState(setupTiles[3].length > 5);
-  const [flip5, setFlip5] = useState(setupTiles[4].length > 5);
-  const [flip6, setFlip6] = useState(setupTiles[5].length > 5);
-
-  const [finalPosString, setFinalPosString] = useState(setup.mapLayout);
-  const finalPos1 = `${pos1 + (flip1 ? "f" : "")}`;
-  const finalPos2 = `${pos2 + (flip2 ? "f" : "")}`;
-  const finalPos3 = `${pos3 + (flip3 ? "f" : "")}`;
-  const finalPos4 = `${pos4 + (flip4 ? "f" : "")}`;
-  const finalPos5 = `${pos5 + (flip5 ? "f" : "")}`;
-  const finalPos6 = `${pos6 + (flip6 ? "f" : "")}`;
+  const [flip1, setFlip1] = useState(setupTiles.position1.flipped);
+  const [flip2, setFlip2] = useState(setupTiles.position1.flipped);
+  const [flip3, setFlip3] = useState(setupTiles.position1.flipped);
+  const [flip4, setFlip4] = useState(setupTiles.position1.flipped);
+  const [flip5, setFlip5] = useState(setupTiles.position1.flipped);
+  const [flip6, setFlip6] = useState(setupTiles.position1.flipped);
 
   useEffect(() => {
-    console.log(setup.mapLayout);
-
-    setFinalPosString(
-      [finalPos1, finalPos2, finalPos3, finalPos4, finalPos5, finalPos6].join(
-        ","
-      )
-    );
+    setup.setMapLayout({
+      position1: {
+        tile: pos1,
+        flipped: flip1,
+      },
+      position2: {
+        tile: pos2,
+        flipped: flip2,
+      },
+      position3: {
+        tile: pos3,
+        flipped: flip3,
+      },
+      position4: {
+        tile: pos4,
+        flipped: flip4,
+      },
+      position5: {
+        tile: pos5,
+        flipped: flip5,
+      },
+      position6: {
+        tile: pos6,
+        flipped: flip6,
+      },
+    });
   }, [
     pos1,
     pos2,
@@ -134,17 +143,14 @@ export function Step2() {
     flip5,
     flip6,
   ]);
-  useEffect(() => {
-    setup.setMapLayout(finalPosString!);
-  }, [finalPosString]);
 
   const tilesVisual = [
-    finalPos1,
-    finalPos2,
-    finalPos3,
-    finalPos4,
-    finalPos5,
-    finalPos6,
+    `tile${pos1}${flip1 ? "f" : ""}`,
+    `tile${pos2}${flip2 ? "f" : ""}`,
+    `tile${pos3}${flip3 ? "f" : ""}`,
+    `tile${pos4}${flip4 ? "f" : ""}`,
+    `tile${pos5}${flip5 ? "f" : ""}`,
+    `tile${pos6}${flip6 ? "f" : ""}`,
   ];
 
   return (
@@ -241,26 +247,26 @@ export function Step2() {
         draggable
       >
         <Layer>
-          <MapTiles tileset={tiles[`${pos1 + (flip1 ? "f" : "")}`]} />
+          <MapTiles tileset={tiles[`tile${pos1 + (flip1 ? "f" : "")}`]} />
           <MapTiles
-            tileset={tiles[`${pos2 + (flip2 ? "f" : "")}`]}
+            tileset={tiles[`tile${pos2 + (flip2 ? "f" : "")}`]}
             offsetX={offsetX}
           />
           <MapTiles
-            tileset={tiles[`${pos3 + (flip3 ? "f" : "")}`]}
+            tileset={tiles[`tile${pos3 + (flip3 ? "f" : "")}`]}
             offsetY={offsetY}
           />
           <MapTiles
-            tileset={tiles[`${pos4 + (flip4 ? "f" : "")}`]}
+            tileset={tiles[`tile${pos4 + (flip4 ? "f" : "")}`]}
             offsetX={offsetX}
             offsetY={offsetY}
           />
           <MapTiles
-            tileset={tiles[`${pos5 + (flip5 ? "f" : "")}`]}
+            tileset={tiles[`tile${pos5 + (flip5 ? "f" : "")}`]}
             offsetY={offsetY - 260}
           />
           <MapTiles
-            tileset={tiles[`${pos6 + (flip6 ? "f" : "")}`]}
+            tileset={tiles[`tile${pos6 + (flip6 ? "f" : "")}`]}
             offsetX={offsetX}
             offsetY={offsetY - 260}
           />
@@ -274,9 +280,9 @@ interface IMapTileChoice {
   radioName: string;
   radioLabel: string;
   switchName: string;
-  pos: string;
+  pos: number;
   flip: boolean;
-  setPos: (s: string) => void;
+  setPos: (s: TileNumber) => void;
   setFlip: (b: boolean) => void;
 }
 
@@ -295,15 +301,15 @@ function MapTileChoice({
         label={label}
         required
         name={name}
-        value={pos}
-        onChange={(e) => setPos(e)}
+        value={pos.toString()}
+        onChange={(e) => setPos(parseInt(e) as TileNumber)}
       >
-        <Radio value="tile1" label="Tile 1" />
-        <Radio value="tile2" label="Tile 2" />
-        <Radio value="tile3" label="Tile 3" />
-        <Radio value="tile4" label="Tile 4" />
-        <Radio value="tile5" label="Tile 5" />
-        <Radio value="tile6" label="Tile 6" />
+        <Radio value="1" label="Tile 1" />
+        <Radio value="2" label="Tile 2" />
+        <Radio value="3" label="Tile 3" />
+        <Radio value="4" label="Tile 4" />
+        <Radio value="5" label="Tile 5" />
+        <Radio value="6" label="Tile 6" />
       </RadioGroup>
       <Switch
         label="Flipped"

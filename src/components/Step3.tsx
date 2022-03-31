@@ -49,10 +49,9 @@ export function Step3({
   };
   const setup = useContext(SetupContext);
   const a = useViewportSize();
-
-  const mapTilesArray = setup.mapLayout.split(",");
-  const offsetX = -450;
-  const offsetY = -260;
+  const mapTiles = setup.mapLayout;
+  const offsetX = -200;
+  const offsetY = -200;
 
   return (
     <>
@@ -77,9 +76,11 @@ export function Step3({
         </Stepper.Step>
       </Stepper>
 
-      <Button variant="default" onClick={prevStep}>
-        Back
-      </Button>
+      {active !== 0 ? (
+        <Button variant="default" onClick={prevStep}>
+          Back
+        </Button>
+      ) : null}
       <Button onClick={nextStep}>Next step</Button>
       <Stage
         width={a.width - a.width * 0.1}
@@ -91,17 +92,70 @@ export function Step3({
         }}
       >
         <Layer>
-          <MapTiles tileset={tiles[mapTilesArray[0]]} />
-          <MapTiles tileset={tiles[mapTilesArray[1]]} offsetX={offsetX} />
-          <MapTiles tileset={tiles[mapTilesArray[2]]} offsetY={offsetY} />
           <MapTiles
-            tileset={tiles[mapTilesArray[3]]}
+            tileset={
+              tiles[
+                `tile${
+                  mapTiles.position1.tile +
+                  (mapTiles.position1.flipped ? "f" : "")
+                }`
+              ]
+            }
+          />
+          <MapTiles
+            tileset={
+              tiles[
+                `tile${
+                  mapTiles.position2.tile +
+                  (mapTiles.position2.flipped ? "f" : "")
+                }`
+              ]
+            }
+            offsetX={offsetX}
+          />
+          <MapTiles
+            tileset={
+              tiles[
+                `tile${
+                  mapTiles.position3.tile +
+                  (mapTiles.position3.flipped ? "f" : "")
+                }`
+              ]
+            }
+            offsetY={offsetY}
+          />
+          <MapTiles
+            tileset={
+              tiles[
+                `tile${
+                  mapTiles.position4.tile +
+                  (mapTiles.position4.flipped ? "f" : "")
+                }`
+              ]
+            }
             offsetX={offsetX}
             offsetY={offsetY}
           />
-          <MapTiles tileset={tiles[mapTilesArray[4]]} offsetY={offsetY - 260} />
           <MapTiles
-            tileset={tiles[mapTilesArray[5]]}
+            tileset={
+              tiles[
+                `tile${
+                  mapTiles.position5.tile +
+                  (mapTiles.position5.flipped ? "f" : "")
+                }`
+              ]
+            }
+            offsetY={offsetY - 260}
+          />
+          <MapTiles
+            tileset={
+              tiles[
+                `tile${
+                  mapTiles.position6.tile +
+                  (mapTiles.position6.flipped ? "f" : "")
+                }`
+              ]
+            }
             offsetX={offsetX}
             offsetY={offsetY - 260}
           />
