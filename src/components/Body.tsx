@@ -44,9 +44,11 @@ export function Body({
   return (
     <Container size={"sm"}>
       <Center component="small">
-        <Button variant="default" onClick={prevSetupStep}>
-          Back
-        </Button>
+        {setupStep !== 0 ? (
+          <Button variant="default" onClick={prevSetupStep}>
+            Back
+          </Button>
+        ) : null}
         <Button onClick={nextSetupStep}>Next step</Button>
       </Center>
       <Center component="small">
