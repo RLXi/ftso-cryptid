@@ -50,8 +50,8 @@ export function Step3({
   const setup = useContext(SetupContext);
   const a = useViewportSize();
   const mapTiles = setup.mapLayout;
-  const offsetX = -200;
-  const offsetY = -200;
+  const offsetX = -450;
+  const offsetY = -260;
 
   return (
     <>
