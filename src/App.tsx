@@ -1,14 +1,12 @@
-import { Body, Canvas } from "./components";
-import { useMouse } from "@mantine/hooks";
-import { Drawer, Button, AppShell, Center } from "@mantine/core";
-import Structure, { IStructure } from "./components/Structure";
+import { Body } from "./components";
+import { AppShell, Center } from "@mantine/core";
+import setupContext from "./SetupContext";
 
 import "./App.css";
-import { useState, ReactNode } from "react";
-
-import { useMap } from "./hooks";
+import { useState, ReactNode, useContext } from "react";
 
 function App() {
+  const setup = useContext(setupContext);
   const [isOpen, setIsOpen] = useState(false);
   const [setupStep, setSetupStep] = useState(0);
   const [active, setActive] = useState(0);
@@ -16,8 +14,22 @@ function App() {
   const [playerNum, setPlayerNum] = useState(3);
   // const { ref, x: mx, y: my } = useMouse();
   const structures: ReactNode[] = [];
+
   const nextSetupStep = () =>
-    setSetupStep((current: number) => (current < 4 ? current + 1 : current));
+    setSetupStep((current: number) => {
+      // map generation step
+      if (current === 1) {
+        const mapIds = Object.entries(setup.mapLayout);
+        const num = new Set(mapIds.map((entry) => entry[1].tile));
+
+        if (num.size !== 6) {
+          alert("Please select 6 different tiles for the map.");
+          return current;
+        }
+      }
+
+      return current < 4 ? current + 1 : current;
+    });
   const prevSetupStep = () =>
     setSetupStep((current: number) => (current > 0 ? current - 1 : current));
 
@@ -25,7 +37,6 @@ function App() {
     setActive((current: number) => (current < 6 ? current + 1 : current));
   const prevStep = () =>
     setActive((current: number) => (current > 0 ? current - 1 : current));
-  const hexes = useMap();
 
   // function addStructure({ color, type }: IStructure) {
   //   return structures.push(
