@@ -52,11 +52,7 @@ export function Body({
         <Button onClick={nextSetupStep}>Next step</Button>
       </Center>
       <Center component="small">
-        <Stepper
-          iconSize={iconSize}
-          active={setupStep}
-          onStepClick={setSetupStep}
-        >
+        <Stepper iconSize={iconSize} active={setupStep}>
           <Stepper.Step label="Game mode">
             <Error>
               <Step1
