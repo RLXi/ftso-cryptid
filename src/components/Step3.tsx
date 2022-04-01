@@ -3,6 +3,7 @@ import { useContext } from "react";
 import SetupContext from "../SetupContext";
 import { BsFillTriangleFill, BsFillOctagonFill } from "react-icons/bs";
 import { useMap } from "../hooks";
+import { IStructurePosition } from "../types";
 
 export function Step3({
   iconSize,
@@ -26,7 +27,7 @@ export function Step3({
   return (
     <>
       <Stepper iconSize={iconSize} active={active} onStepClick={setActive}>
-        {struct.map((structure, idx) => {
+        {struct.map((structure: IStructurePosition, idx) => {
           if (structure.color === "black" && setup.gameMode !== "advanced")
             return null;
           return (

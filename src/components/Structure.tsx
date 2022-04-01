@@ -1,24 +1,10 @@
 import { KonvaPointerEvent } from "konva/lib/PointerEvents";
 import { RegularPolygon } from "react-konva";
-import { IStructureColor, IStructureType } from "SetupContext";
-export interface IStructure {
-  type: IStructureType;
-  color: IStructureColor;
-}
-
-interface IPosition {
-  x: number;
-  y: number;
-}
+import { IStructurePosition } from "../types";
 
 const ROTATION = 24;
 
-export default function Structure({
-  type,
-  color,
-  x,
-  y,
-}: IStructure & IPosition) {
+export default function Structure({ type, color, x, y }: IStructurePosition) {
   function handleClick(e: KonvaPointerEvent) {
     console.log(`structure ${type} ${color}`);
   }
