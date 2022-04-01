@@ -1,3 +1,5 @@
 # FTSO Cryptid
 
-or Find The S\*\*\* Outta Cryptid or Fatso Cryptid
+Helper tool for board game Cryptid.
+
+Still in development.
