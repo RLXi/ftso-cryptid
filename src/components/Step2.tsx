@@ -96,11 +96,11 @@ export function Step2() {
   const [pos6, setPos6] = useState(setupTiles.position6.tile);
 
   const [flip1, setFlip1] = useState(setupTiles.position1.flipped);
-  const [flip2, setFlip2] = useState(setupTiles.position1.flipped);
-  const [flip3, setFlip3] = useState(setupTiles.position1.flipped);
-  const [flip4, setFlip4] = useState(setupTiles.position1.flipped);
-  const [flip5, setFlip5] = useState(setupTiles.position1.flipped);
-  const [flip6, setFlip6] = useState(setupTiles.position1.flipped);
+  const [flip2, setFlip2] = useState(setupTiles.position2.flipped);
+  const [flip3, setFlip3] = useState(setupTiles.position3.flipped);
+  const [flip4, setFlip4] = useState(setupTiles.position4.flipped);
+  const [flip5, setFlip5] = useState(setupTiles.position5.flipped);
+  const [flip6, setFlip6] = useState(setupTiles.position6.flipped);
 
   useEffect(() => {
     setup.setMapLayout({
