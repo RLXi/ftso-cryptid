@@ -3,17 +3,16 @@ import { AppShell, Center } from "@mantine/core";
 import setupContext from "./SetupContext";
 
 import "./App.css";
-import { useState, ReactNode, useContext } from "react";
+import { useState, useContext } from "react";
 
 function App() {
   const setup = useContext(setupContext);
-  const [isOpen, setIsOpen] = useState(false);
   const [setupStep, setSetupStep] = useState(0);
   const [active, setActive] = useState(0);
   const [advanced, setAdvanced] = useState(false);
   const [playerNum, setPlayerNum] = useState(3);
-  // const { ref, x: mx, y: my } = useMouse();
-  const structures: ReactNode[] = [];
+
+  setup.setGameMode(advanced ? "advanced" : "normal");
 
   const nextSetupStep = () =>
     setSetupStep((current: number) => {
@@ -37,12 +36,6 @@ function App() {
     setActive((current: number) => (current < 6 ? current + 1 : current));
   const prevStep = () =>
     setActive((current: number) => (current > 0 ? current - 1 : current));
-
-  // function addStructure({ color, type }: IStructure) {
-  //   return structures.push(
-  //     <Structure color={color} type={type} x={mx} y={my} />
-  //   );
-  // }
 
   return (
     <AppShell padding={"md"}>
