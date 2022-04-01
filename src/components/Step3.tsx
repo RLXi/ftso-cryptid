@@ -1,24 +1,8 @@
-import { Button, Stepper } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import { Button, List, Stepper } from "@mantine/core";
 import { useContext } from "react";
-import { Layer, Stage } from "react-konva";
 import SetupContext from "../SetupContext";
-import { MapTiles } from "./MapTiles";
-
-import {
-  tile1,
-  tile1f,
-  tile2,
-  tile2f,
-  tile3,
-  tile3f,
-  tile4,
-  tile4f,
-  tile5,
-  tile5f,
-  tile6,
-  tile6f,
-} from "../utils";
+import { BsFillTriangleFill, BsFillOctagonFill } from "react-icons/bs";
+import { useMap } from "../hooks";
 
 export function Step3({
   iconSize,
@@ -33,47 +17,27 @@ export function Step3({
   prevStep: () => void;
   nextStep: () => void;
 }) {
-  const tiles: any = {
-    tile1,
-    tile2,
-    tile3,
-    tile4,
-    tile5,
-    tile6,
-    tile1f,
-    tile2f,
-    tile3f,
-    tile4f,
-    tile5f,
-    tile6f,
-  };
+  const { Map } = useMap();
+
   const setup = useContext(SetupContext);
-  const a = useViewportSize();
-  const mapTiles = setup.mapLayout;
-  const offsetX = -450;
-  const offsetY = -260;
+
+  const struct = Object.values(setup.structurePositions);
 
   return (
     <>
       <Stepper iconSize={iconSize} active={active} onStepClick={setActive}>
-        <Stepper.Step label="Blue Shack">
-          Step 1: Place the Blue Shack
-        </Stepper.Step>
-        <Stepper.Step label="Blue Stone">
-          Step 2: Place the Blue Stone
-        </Stepper.Step>
-        <Stepper.Step label="Green Shack">
-          Step 3: Place the Green Shack
-        </Stepper.Step>
-        <Stepper.Step label="Green Stone">
-          Step 4: Place the Green Stone
-        </Stepper.Step>
-        <Stepper.Step label="White Shack">
-          Step 5: Place the White Shack
-        </Stepper.Step>
-        <Stepper.Step label="White Stone">
-          Step 6: Place the White Stone
-        </Stepper.Step>
+        {struct.map((structure, idx) => {
+          if (structure.color === "black" && setup.gameMode !== "advanced")
+            return null;
+          return (
+            <Stepper.Step
+              style={{ textTransform: "capitalize" }}
+              label={`${structure.color} ${structure.type}`}
+            >
+              Step {idx + 1}: Place the {`${structure.color} ${structure.type}`}
+            </Stepper.Step>
+          );
+        })}
       </Stepper>
 
       {active !== 0 ? (
@@ -82,85 +46,24 @@ export function Step3({
         </Button>
       ) : null}
       <Button onClick={nextStep}>Next step</Button>
-      <Stage
-        width={a.width - a.width * 0.1}
-        height={a.height}
-        offsetX={-200}
-        offsetY={-200}
-        style={{
-          backgroundColor: "var(--gray-9)",
-        }}
-      >
-        <Layer>
-          <MapTiles
-            tileset={
-              tiles[
-                `tile${
-                  mapTiles.position1.tile +
-                  (mapTiles.position1.flipped ? "f" : "")
-                }`
-              ]
-            }
-          />
-          <MapTiles
-            tileset={
-              tiles[
-                `tile${
-                  mapTiles.position2.tile +
-                  (mapTiles.position2.flipped ? "f" : "")
-                }`
-              ]
-            }
-            offsetX={offsetX}
-          />
-          <MapTiles
-            tileset={
-              tiles[
-                `tile${
-                  mapTiles.position3.tile +
-                  (mapTiles.position3.flipped ? "f" : "")
-                }`
-              ]
-            }
-            offsetY={offsetY}
-          />
-          <MapTiles
-            tileset={
-              tiles[
-                `tile${
-                  mapTiles.position4.tile +
-                  (mapTiles.position4.flipped ? "f" : "")
-                }`
-              ]
-            }
-            offsetX={offsetX}
-            offsetY={offsetY}
-          />
-          <MapTiles
-            tileset={
-              tiles[
-                `tile${
-                  mapTiles.position5.tile +
-                  (mapTiles.position5.flipped ? "f" : "")
-                }`
-              ]
-            }
-            offsetY={offsetY - 260}
-          />
-          <MapTiles
-            tileset={
-              tiles[
-                `tile${
-                  mapTiles.position6.tile +
-                  (mapTiles.position6.flipped ? "f" : "")
-                }`
-              ]
-            }
-            offsetX={offsetX}
-            offsetY={offsetY - 260}
-          />
-        </Layer>
-      </Stage>
+
+      <List>
+        <List.Item>
+          Blue shack <BsFillTriangleFill style={{ verticalAlign: "sub" }} /> :{" "}
+          {"{"}
+          {setup.structurePositions["blue-shack"].x},
+          {setup.structurePositions["blue-shack"].y}
+          {"}"}
+        </List.Item>
+        <List.Item>
+          Blue stone <BsFillOctagonFill style={{ verticalAlign: "sub" }} /> :{" "}
+          {"{"}
+          {setup.structurePositions["blue-stone"].x},
+          {setup.structurePositions["blue-stone"].y}
+          {"}"}
+        </List.Item>
+      </List>
+      <Map />
     </>
   );
 }
