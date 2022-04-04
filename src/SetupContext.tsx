@@ -1,7 +1,7 @@
-import React from "react";
+import { createContext, useState, useReducer, ReactNode } from "react";
 import { useSetState } from "@mantine/hooks";
 
-import { IStructurePositions } from "./types";
+import { IStructurePositions, IStructurePosition } from "./types";
 
 export type GameModeType = "normal" | "advanced";
 export type NumPlayersType = 2 | 3 | 4 | 5;
@@ -36,32 +36,135 @@ export interface IMapLayout {
 }
 
 export interface ISetup {
+  isSetup: boolean;
   mapLayout: IMapLayout;
   structurePositions: IStructurePositions;
   gameMode: GameModeType;
   numPlayers: NumPlayersType;
+  setIsSetup: (isSetup: boolean) => void;
   setGameMode: (mode: GameModeType) => void;
   setNumPlayers: (numPlayers: NumPlayersType) => void;
-  setStructurePositions: (structurePositions: IStructurePositions) => void;
+  setStructurePositions: (action: IReducerActionTypes) => void;
   setMapLayout: (MapCode: IMapLayout) => void;
 }
 
-const SetupContext = React.createContext<ISetup>({} as ISetup);
+const SetupContext = createContext<ISetup>({} as ISetup);
 
-export function SetupProvider({ children }: { children: React.ReactNode }) {
-  const [gameMode, setGameMode] = React.useState<GameModeType>("normal");
-  const [structurePositions, setStructurePositions] =
-    useSetState<IStructurePositions>({
-      "green-shack": { x: -1, y: -1, type: "shack", color: "green" },
-      "green-stone": { x: -1, y: -1, type: "stone", color: "green" },
-      "blue-shack": { x: -1, y: -1, type: "shack", color: "blue" },
-      "blue-stone": { x: -1, y: -1, type: "stone", color: "blue" },
-      "white-shack": { x: -1, y: -1, type: "shack", color: "white" },
-      "white-stone": { x: -1, y: -1, type: "stone", color: "white" },
-      "black-shack": { x: -1, y: -1, type: "shack", color: "black" },
-      "black-stone": { x: -1, y: -1, type: "stone", color: "black" },
-    });
-  const [numPlayers, setNumPlayers] = React.useState<NumPlayersType>(4);
+interface IReducerActionTypes {
+  type:
+    | "greenshack"
+    | "greenstone"
+    | "blueshack"
+    | "bluestone"
+    | "whiteshack"
+    | "whitestone"
+    | "blackshack"
+    | "blackstone";
+  newPosition: Pick<IStructurePosition, "x" | "y">;
+}
+
+function structureReducer(
+  state: IStructurePositions,
+  action: IReducerActionTypes
+) {
+  const { newPosition, type } = action;
+  const { x, y } = newPosition;
+  switch (type) {
+    case "greenshack":
+      return {
+        ...state,
+        greenshack: {
+          ...state.greenshack,
+          x,
+          y,
+        },
+      };
+    case "greenstone":
+      return {
+        ...state,
+        greenstone: {
+          ...state.greenstone,
+          x,
+          y,
+        },
+      };
+    case "blueshack":
+      return {
+        ...state,
+        blueshack: {
+          ...state.blueshack,
+          x,
+          y,
+        },
+      };
+    case "bluestone":
+      return {
+        ...state,
+        bluestone: {
+          ...state.bluestone,
+          x,
+          y,
+        },
+      };
+    case "whiteshack":
+      return {
+        ...state,
+        whiteshack: {
+          ...state.whiteshack,
+          x,
+          y,
+        },
+      };
+    case "whitestone":
+      return {
+        ...state,
+        whitestone: {
+          ...state.whitestone,
+          x,
+          y,
+        },
+      };
+    case "blackshack":
+      return {
+        ...state,
+        blackshack: {
+          ...state.blackshack,
+          x,
+          y,
+        },
+      };
+    case "blackstone":
+      return {
+        ...state,
+        blackstone: {
+          ...state.blackstone,
+          x,
+          y,
+        },
+      };
+    default:
+      return state;
+  }
+}
+
+const initialState: IStructurePositions = {
+  greenshack: { x: -1, y: -1, type: "shack", color: "green" },
+  greenstone: { x: -1, y: -1, type: "stone", color: "green" },
+  blueshack: { x: -1, y: -1, type: "shack", color: "blue" },
+  bluestone: { x: -1, y: -1, type: "stone", color: "blue" },
+  whiteshack: { x: -1, y: -1, type: "shack", color: "white" },
+  whitestone: { x: -1, y: -1, type: "stone", color: "white" },
+  blackshack: { x: -1, y: -1, type: "shack", color: "black" },
+  blackstone: { x: -1, y: -1, type: "stone", color: "black" },
+};
+
+export function SetupProvider({ children }: { children: ReactNode }) {
+  const [gameMode, setGameMode] = useState<GameModeType>("normal");
+  const [structurePositions, dispatch] = useReducer(
+    structureReducer,
+    initialState
+  );
+  const [numPlayers, setNumPlayers] = useState<NumPlayersType>(4);
   const [mapLayout, setMapLayout] = useSetState<IMapLayout>({
     position1: {
       tile: 1,
@@ -88,16 +191,19 @@ export function SetupProvider({ children }: { children: React.ReactNode }) {
       flipped: false,
     },
   });
+  const [isSetup, setIsSetup] = useState(true);
 
   return (
     <SetupContext.Provider
       value={{
+        isSetup,
         mapLayout,
         structurePositions,
         gameMode,
         numPlayers,
+        setIsSetup,
         setGameMode,
-        setStructurePositions,
+        setStructurePositions: dispatch,
         setNumPlayers,
         setMapLayout,
       }}

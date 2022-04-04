@@ -1,8 +1,8 @@
 export type IStructureType = "shack" | "stone";
 export type IStructureColor = "blue" | "green" | "white" | "black";
 export interface IStructurePosition {
-  x: -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
-  y: -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  x: number;
+  y: number;
   type: IStructureType;
   color: IStructureColor;
 }
@@ -10,12 +10,12 @@ export interface IStructurePosition {
 export type str = `${IStructureColor}-${IStructureType}`;
 
 export interface IStructurePositions {
-  "green-shack": IStructurePosition;
-  "green-stone": IStructurePosition;
-  "blue-shack": IStructurePosition;
-  "blue-stone": IStructurePosition;
-  "white-shack": IStructurePosition;
-  "white-stone": IStructurePosition;
-  "black-shack": IStructurePosition;
-  "black-stone": IStructurePosition;
+  greenshack: IStructurePosition;
+  greenstone: IStructurePosition;
+  blueshack: IStructurePosition;
+  bluestone: IStructurePosition;
+  whiteshack: IStructurePosition;
+  whitestone: IStructurePosition;
+  blackshack: IStructurePosition;
+  blackstone: IStructurePosition;
 }

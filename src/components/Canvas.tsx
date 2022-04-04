@@ -1,7 +1,7 @@
 import React from "react";
 import { Stage, Layer } from "react-konva";
 import PlayerMarker from "./PlayerMarker";
-import Structure from "./Structure";
+import { Structure } from "./Structure";
 import { Player } from "../utils";
 import { useViewportSize } from "@mantine/hooks";
 export function Canvas({

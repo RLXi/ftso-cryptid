@@ -1,5 +1,3 @@
-import { useViewportSize } from "@mantine/hooks";
-import _ from "lodash";
 import { useMemo } from "react";
 import { Group } from "react-konva";
 import { GRID_HEX_SIZE, MyGrid } from "../utils";

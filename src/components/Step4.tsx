@@ -1,8 +1,14 @@
+import { useMap } from "../hooks";
 import { useContext } from "react";
 import SetupContext from "../SetupContext";
+
 export function Step4() {
   const setup = useContext(SetupContext);
-  console.log(setup.mapLayout);
+  const { Map } = useMap();
 
-  return <div>Step4</div>;
+  return (
+    <div>
+      <Map />
+    </div>
+  );
 }

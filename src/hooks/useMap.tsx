@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { Center, Slider } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { AnimalHexagon, BasicHexagon } from "../components";
+import { AnimalHexagon, BasicHexagon, Structure } from "../components";
 import React, { useState, useContext, useMemo } from "react";
 import { Layer, Stage } from "react-konva";
 import SetupContext from "../SetupContext";
@@ -23,12 +23,6 @@ import {
   tile6,
   tile6f,
 } from "../utils";
-
-interface ITerrain {
-  type: string;
-  color: string;
-  animal?: string;
-}
 
 function RenderMap({
   children,
@@ -87,6 +81,10 @@ export function useMap(gridWidth = 12, gridHeight = 9) {
   const grid = MyGrid(GRID_HEX_SIZE, gridWidth, gridHeight);
   const [gridScale, setGridScale] = useState(1);
   const [gridScaleEnd, setGridScaleEnd] = useState(1);
+  const [lastClickCoordinates, setLastClickCoordinates] = useState({
+    x: -1,
+    y: -1,
+  });
   const a = useViewportSize();
   const setup = useContext(SetupContext);
   const map = setup.mapLayout;
@@ -105,6 +103,10 @@ export function useMap(gridWidth = 12, gridHeight = 9) {
     tile6f,
   };
 
+  function handleClick(x: number, y: number) {
+    setLastClickCoordinates({ x, y });
+  }
+
   const tiles = useMemo(() => {
     const processingOrder = [
       map.position1,
@@ -119,13 +121,14 @@ export function useMap(gridWidth = 12, gridHeight = 9) {
     let cursor = 0;
     let halfpoint = false;
 
-    const hexesInOrder = processingOrder
+    // Take hexes from map tiles and put them all in one array
+    const flatTiles = processingOrder
       .map((val) => tileset[`tile${val.tile}${val.flipped ? "f" : ""}`])
       .reduce((acc: any[], val) => {
         const flat = _.flatten(val);
         return [...acc, ...flat];
       }, []);
-    const typed = [...hexesInOrder] as IAnimalTerrain[];
+    const typed = [...flatTiles] as IAnimalTerrain[];
 
     const hexes = grid.map((hex, idx) => {
       const { animal, type, color } = typed[(idx % 9) + cursor + col];
@@ -133,7 +136,7 @@ export function useMap(gridWidth = 12, gridHeight = 9) {
 
       if (idx % 9 === 8) {
         col += 1;
-        if (col === 6) {
+        if (col === 6 && !halfpoint) {
           halfpoint = true;
           col = 0;
         }
@@ -141,6 +144,7 @@ export function useMap(gridWidth = 12, gridHeight = 9) {
       }
 
       const point = hex.toPoint();
+
       if (animal)
         return (
           <AnimalHexagon
@@ -153,6 +157,7 @@ export function useMap(gridWidth = 12, gridHeight = 9) {
             coordy={hex.y}
             color={color}
             type={type}
+            getCoordinates={() => handleClick(hex.x, hex.y)}
           />
         );
       return (
@@ -165,11 +170,38 @@ export function useMap(gridWidth = 12, gridHeight = 9) {
           key={`${point.x}-${point.y}`}
           color={color}
           type={type}
+          getCoordinates={() => handleClick(hex.x, hex.y)}
         />
       );
     });
     return hexes;
   }, [map]);
+
+  const Structures = useMemo(() => {
+    const struct = Object.values(setup.structurePositions);
+    const yDiff = 86.60254037844386;
+    return () => (
+      <Layer>
+        {struct.map((structure) => {
+          if (structure.color === "black" && setup.gameMode !== "advanced")
+            return;
+          return (
+            <Structure
+              key={structure.type + "-" + structure.color}
+              color={structure.color}
+              type={structure.type}
+              x={75 * structure.x}
+              y={
+                structure.x % 2 === 0
+                  ? yDiff * structure.y
+                  : yDiff * structure.y + yDiff / 2
+              }
+            />
+          );
+        })}
+      </Layer>
+    );
+  }, [setup.structurePositions]);
 
   const Map = useMemo(() => {
     return () => (
@@ -186,8 +218,10 @@ export function useMap(gridWidth = 12, gridHeight = 9) {
             <React.Fragment key={hex.key}>{hex}</React.Fragment>
           ))}
         </Layer>
+        <Structures />
       </RenderMap>
     );
-  }, [gridScale, gridScaleEnd, a.height, a.width]);
-  return { Map };
+  }, [gridScale, gridScaleEnd, a.height, a.width, setup.structurePositions]);
+
+  return { Map, lastClickCoordinates };
 }
