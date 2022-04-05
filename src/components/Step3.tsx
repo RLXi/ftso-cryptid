@@ -22,6 +22,8 @@ export function Step3({
   const { Map, lastClickCoordinates } = useMap();
 
   useEffect(() => {
+    if (lastClickCoordinates.x === -1 || lastClickCoordinates.y === -1) return;
+
     switch (active) {
       case 0:
         setup.setStructurePositions({
