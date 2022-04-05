@@ -32,8 +32,11 @@ function App() {
   const prevSetupStep = () =>
     setSetupStep((current: number) => (current > 0 ? current - 1 : current));
 
-  const nextStep = () =>
-    setActive((current: number) => (current < 6 ? current + 1 : current));
+  const nextStep = () => {
+    if (setup.gameMode === "advanced")
+      setActive((current: number) => (current < 8 ? current + 1 : current));
+    else setActive((current: number) => (current < 6 ? current + 1 : current));
+  };
   const prevStep = () =>
     setActive((current: number) => (current > 0 ? current - 1 : current));
 
